@@ -1416,6 +1416,15 @@ function nextQuestion() {
 
   document.getElementById("feedback").textContent = "";
 
+  let meaningEl = document.getElementById("speaking-meaning");
+  if (isSpeakingMode && (currentItem.meaning_en || currentItem.meaning_kr)) {
+    meaningEl.classList.remove("hidden");
+    meaningEl.textContent =
+      lang === "kr" ? currentItem.meaning_kr : currentItem.meaning_en;
+  } else {
+    meaningEl.classList.add("hidden");
+  }
+
   let answerEl = document.getElementById("answer");
   if (!isSpeakingMode) {
     answerEl.value = "";

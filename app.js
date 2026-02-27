@@ -28,6 +28,7 @@ const i18n = {
     nextQuestion: "Next",
     quit: "Quit",
     meaning: "meaning",
+    listenAgain: "Listen Again",
   },
   kr: {
     startGameBtn: "게임 시작",
@@ -58,6 +59,7 @@ const i18n = {
     nextQuestion: "다음",
     quit: "종료",
     meaning: "의미",
+    listenAgain: "다시 듣기",
   },
 };
 
@@ -1190,7 +1192,7 @@ function speak(text) {
 }
 
 function speakCurrent() {
-  if (currentItem && !isSpeakingMode) {
+  if (currentItem) {
     speak(currentItem.pl);
   }
 }
@@ -1289,12 +1291,8 @@ function initInfiniteModeQueue() {
     document.getElementById("answer").placeholder = i18n[lang].placeholder;
   }
 
-  document.querySelector(".polish-container").style.cursor = isSpeakingMode
-    ? "default"
-    : "pointer";
-  document.querySelector(".speaker-icon").style.display = isSpeakingMode
-    ? "none"
-    : "inline-block";
+  document.querySelector(".polish-container").style.cursor = "pointer";
+  document.querySelector(".speaker-icon").style.display = "inline-block";
 
   nextQuestion();
 }
@@ -1745,6 +1743,7 @@ function showGameOver() {
     <div style="margin-top: 10px;">
       <div style="font-size: 1.2rem; margin-bottom: 12px;">${i18n[lang].gameOver} ${i18n[lang].finalScore}${listeningScore}</div>
       <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+        <button onclick="speakCurrent()" class="secondary" style="margin: 0; padding: 10px 20px; font-size: 1rem;">🔊 ${i18n[lang].listenAgain}</button>
         <button onclick="continueAfterWrong()" style="margin: 0; padding: 10px 20px; font-size: 1rem;">${i18n[lang].nextQuestion}</button>
         <button class="secondary" onclick="quit()" style="margin: 0; padding: 10px 20px; font-size: 1rem; color: var(--error-color); border-color: rgba(220,38,38,0.3);">${i18n[lang].quit}</button>
       </div>

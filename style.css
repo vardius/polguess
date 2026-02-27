@@ -1,0 +1,445 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap");
+
+/* ─── Design tokens ─────────────────────────────────────────────────── */
+:root {
+  --bg-color: #1a0a0a;
+  --surface-color: rgba(40, 10, 10, 0.75);
+  --primary-color: #dc2626;
+  --primary-hover: #b91c1c;
+  --success-color: #10b981;
+  --error-color: #ef4444;
+  --text-main: #fdf2f2;
+  --text-muted: #c4a0a0;
+  --border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ─── Reset / base ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Outfit", system-ui, -apple-system, sans-serif;
+  background: var(--bg-color);
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(185, 28, 28, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 50% 0%, #2d0a0a 0%, #1a0a0a 100%);
+  color: var(--text-main);
+  min-height: 100%;
+  min-height: 100dvh;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* ─── App shell ─────────────────────────────────────────────────────── */
+#app {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px 16px 32px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+h1 {
+  font-size: clamp(2rem, 8vw, 3rem);
+  font-weight: 800;
+  margin: 16px 0 20px;
+  background: linear-gradient(to right, #ff6b6b, #ffd6d6, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 2px;
+  flex-shrink: 0;
+}
+
+h2 {
+  margin-top: 0;
+  font-weight: 600;
+  font-size: clamp(1rem, 4vw, 1.3rem);
+}
+
+/* ─── Glass panel ───────────────────────────────────────────────────── */
+.glass-panel {
+  background: var(--surface-color);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 24px 20px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(220, 38, 38, 0.05);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ─── Buttons ───────────────────────────────────────────────────────── */
+button {
+  padding: 12px 20px;
+  margin: 6px;
+  border-radius: 14px;
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  font-family: inherit;
+  cursor: pointer;
+  background: var(--primary-color);
+  color: white;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  min-height: 48px;
+  touch-action: manipulation;
+}
+button:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+}
+button:active {
+  transform: translateY(0);
+}
+button.secondary {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+}
+button.secondary:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* ─── Input ─────────────────────────────────────────────────────────── */
+input {
+  padding: 14px 16px;
+  font-size: clamp(16px, 4vw, 22px);
+  text-align: center;
+  border-radius: 14px;
+  border: 2px solid var(--border-color);
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
+  width: 100%;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+  margin-top: 16px;
+  min-height: 52px;
+  touch-action: manipulation;
+}
+input:focus {
+  border-color: var(--primary-color);
+}
+
+/* ─── Polish character display ──────────────────────────────────────── */
+.polish-wrapper {
+  display: flex;
+  justify-content: center;
+}
+.polish-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  padding: 8px;
+}
+.polish-char-display {
+  font-size: clamp(48px, 14vw, 90px);
+  margin: 16px 0;
+  font-weight: 800;
+  text-shadow: 0 0 40px rgba(220, 38, 38, 0.4);
+  transition: transform 0.2s;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  color: var(--text-main);
+}
+.polish-container:hover .polish-char-display { transform: scale(1.05); }
+.polish-char-display.error {
+  color: var(--error-color);
+  text-shadow: 0 0 40px rgba(239, 68, 68, 0.3);
+  animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* ─── Feedback / hints ──────────────────────────────────────────────── */
+.hint {
+  color: var(--error-color);
+  margin-top: 12px;
+  font-size: clamp(0.9rem, 3vw, 1.05rem);
+  font-weight: 600;
+  min-height: 24px;
+}
+
+/* ─── Stats header ──────────────────────────────────────────────────── */
+.stats-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  color: var(--text-muted);
+  font-size: clamp(0.78rem, 2.5vw, 0.95rem);
+  font-weight: 600;
+  padding-right: 36px;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+/* ─── Timer bar ─────────────────────────────────────────────────────── */
+.progressBar {
+  height: 6px;
+  background: rgba(0, 0, 0, 0.3);
+  margin: 10px 0 14px;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+.progressInner {
+  height: 100%;
+  background: linear-gradient(90deg, #34d399, #10b981);
+  width: 100%;
+  transition: width 0.1s linear, background-color 0.3s;
+}
+.progressInner.warning { background: linear-gradient(90deg, #fcd34d, #fbbf24); }
+.progressInner.danger  { background: linear-gradient(90deg, #fca5a5, #ef4444); }
+
+/* ─── Utility ───────────────────────────────────────────────────────── */
+.hidden { display: none !important; }
+
+/* ─── Learning screen ───────────────────────────────────────────────── */
+#learningScreen {
+  overflow-y: auto;
+}
+.learning-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+.flashcard {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 16px 8px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  touch-action: manipulation;
+}
+.flashcard:hover, .flashcard:active {
+  background: rgba(220, 38, 38, 0.1);
+  transform: translateY(-4px);
+  border-color: rgba(220, 38, 38, 0.5);
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3);
+}
+.flashcard .polish-char { font-size: clamp(28px, 7vw, 40px); font-weight: 800; color: var(--text-main); }
+.flashcard .phonetic   { font-size: clamp(12px, 3vw, 15px); color: var(--primary-color); font-weight: 700; }
+.flashcard .meaning    { font-size: clamp(11px, 2.5vw, 13px); color: var(--text-muted); font-weight: 500; text-align: center; }
+.flashcard .speaker {
+  font-size: 12px;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+}
+.flashcard:hover .speaker { opacity: 1; }
+
+/* ─── Shake animation ───────────────────────────────────────────────── */
+@keyframes shake {
+  10%, 90%  { transform: translate3d(-1px, 0, 0); }
+  20%, 80%  { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60%  { transform: translate3d(4px, 0, 0); }
+}
+
+/* ─── Speaker icon ──────────────────────────────────────────────────── */
+.speaker-icon {
+  font-size: 26px;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+.polish-container:hover .speaker-icon { opacity: 1; }
+
+/* ─── Close button ──────────────────────────────────────────────────── */
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+  font-size: 18px;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  cursor: pointer;
+  z-index: 50;
+}
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ─── Progress badges ───────────────────────────────────────────────── */
+.progress-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+  overflow-y: auto;
+  max-height: 200px;
+  padding-bottom: 4px;
+  width: 100%;
+}
+.progress-badges::-webkit-scrollbar { width: 4px; }
+.progress-badges::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+.badge {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 6px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.3s;
+}
+.badge.done {
+  border-color: var(--success-color);
+  background: rgba(16, 185, 129, 0.1);
+}
+.badge-char { font-size: 1rem; font-weight: 600; color: var(--text-main); }
+.badge.done .badge-char { color: var(--success-color); }
+.badge-dots { display: flex; gap: 4px; }
+.badge-dots .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+}
+.badge-dots .dot.filled { background: var(--success-color); }
+
+/* ─── Level progress bar ────────────────────────────────────────────── */
+.level-progress-container {
+  margin-top: 12px;
+  text-align: left;
+  cursor: pointer;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  transition: background 0.2s;
+}
+.level-progress-container:hover { background: rgba(255, 255, 255, 0.08); }
+.level-progress-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+.level-progress-bar {
+  height: 6px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.level-progress-inner {
+  height: 100%;
+  background: var(--primary-color);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+/* ─── Sidebar ───────────────────────────────────────────────────────── */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 480px;
+  height: 100%;
+  height: 100dvh;
+  background: rgba(20, 5, 5, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-left: 1px solid var(--border-color);
+  padding: 24px 20px;
+  transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.sidebar.open { right: 0; }
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.sidebar-header h2 { margin: 0; font-size: 1.3rem; }
+
+/* ─── Start screen mode selector ───────────────────────────────────── */
+.lang-toggle { margin-bottom: 16px; }
+.mode-selector { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.mode-btn {
+  width: 100%;
+  padding: 16px;
+  margin: 0;
+  font-size: clamp(1rem, 3.5vw, 1.15rem);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Listening / recording pulse ───────────────────────────────────── */
+@keyframes pulse-recording {
+  0%   { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+  70%  { box-shadow: 0 0 0 12px rgba(220, 38, 38, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+}
+.listening-active {
+  border-color: var(--primary-color) !important;
+  animation: pulse-recording 1.5s infinite !important;
+  background: rgba(220, 38, 38, 0.08) !important;
+}
+
+/* ─── Game panel scroll on very small screens ────────────────────────── */
+#game {
+  overflow-y: auto;
+}
+
+/* ─── Responsive tweaks ─────────────────────────────────────────────── */
+@media (max-width: 400px) {
+  .glass-panel { padding: 18px 14px; border-radius: 16px; }
+  .polish-char-display { margin: 10px 0; }
+  .learning-grid { gap: 8px; }
+  .badge { padding: 5px 8px; }
+}
+
+@media (min-height: 700px) {
+  #app { justify-content: center; }
+}

@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>POLGUESS - Learn Polish Language</title>
+    <meta
+      name="description"
+      content="Learn Polish with POLGUESS. An interactive flashcard game for Korean and English speakers to practice Polish letters, sounds, and words."
+    />
+    <meta
+      name="keywords"
+      content="Polish language, learn Polish, flashcards, language learning, Polish alphabet, Polish for Koreans, polski"
+    />
+    <meta name="author" content="Vardius" />
+    <meta property="og:title" content="POLGUESS - Learn Polish" />
+    <meta
+      property="og:description"
+      content="An interactive flashcard game to practice reading and pronouncing the Polish language, for Korean and English speakers."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://vardius.github.io/polguess" />
+
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#7f0d0d" />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <h1>POLGUESS</h1>
+
+      <div id="startScreen" class="glass-panel">
+        <div class="lang-toggle" style="margin-bottom: 20px">
+          <button id="btn-lang-en" onclick="setLang('en')">🇬🇧 English</button>
+          <button id="btn-lang-kr" class="secondary" onclick="setLang('kr')">
+            🇰🇷 한국어
+          </button>
+        </div>
+        <div class="mode-selector">
+          <button
+            onclick="startGame()"
+            class="mode-btn"
+            data-i18n="readingMode"
+          >
+            📖 Reading Mode
+          </button>
+          <button
+            onclick="startListeningGame()"
+            class="mode-btn secondary"
+            data-i18n="listeningMode"
+          >
+            🎧 Listening Mode
+          </button>
+          <button
+            onclick="startSpeakingGame()"
+            class="mode-btn secondary"
+            data-i18n="speakingMode"
+          >
+            🎤 Speaking Mode
+          </button>
+        </div>
+      </div>
+
+      <div id="learningScreen" class="glass-panel hidden">
+        <button class="close-btn" onclick="quit()" title="Quit Game">✕</button>
+        <h2 data-i18n="newChars">New Characters to Learn</h2>
+        <p style="color: var(--text-muted)" data-i18n="clickToHear">
+          Click on a card to hear its pronunciation
+        </p>
+        <div id="learningGrid" class="learning-grid">
+          <!-- flashcards generated here -->
+        </div>
+        <button onclick="startRoundFromLearning()" data-i18n="startRoundBtn">
+          Start Round
+        </button>
+      </div>
+
+      <div id="game" class="glass-panel hidden" style="padding-top: 36px">
+        <button class="close-btn" onclick="quit()" title="Quit Game">✕</button>
+
+        <div
+          class="stats-container"
+          style="padding-right: 40px; text-align: left"
+        >
+          <div id="stageInfo"></div>
+          <div id="levelInfo"></div>
+        </div>
+
+        <div class="progressBar">
+          <div id="timerBar" class="progressInner"></div>
+        </div>
+
+        <div class="polish-wrapper">
+          <div class="polish-container" onclick="speakCurrent()">
+            <div id="char" class="polish-char-display"></div>
+            <span class="speaker-icon">🔊</span>
+          </div>
+        </div>
+
+        <input
+          id="answer"
+          autocomplete="off"
+          placeholder="Type phonetic spelling here..."
+          data-i18n="placeholder"
+        />
+        <div id="feedback" class="hint"></div>
+
+        <div class="level-progress-container" onclick="toggleSidebar()">
+          <div class="level-progress-header">
+            <span data-i18n="levelProgress">Level Progress</span>
+            <span id="levelProgressText">0%</span>
+          </div>
+          <div class="level-progress-bar">
+            <div id="levelProgressInner" class="level-progress-inner"></div>
+          </div>
+        </div>
+
+        <div id="sidebar" class="sidebar">
+          <div class="sidebar-header">
+            <h2 data-i18n="details">Details</h2>
+            <span
+              class="close-btn"
+              style="position: static"
+              onclick="toggleSidebar()"
+              >✕</span
+            >
+          </div>
+          <div class="stats" id="stats" style="flex: 1; overflow-y: auto"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
